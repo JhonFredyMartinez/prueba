@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bucaclinicos S.A.S</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .nav-link {
+      position: relative;
+      font-weight: bold;
+      color: white;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background-color: white;
+      transform: scaleX(0);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    .scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .counter-box {
+      width: 60px;
+      text-align: center;
+      border: 1px solid #dee2e6;
+      border-radius: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      font-weight: bold;
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+  <!-- Navbar -->
+  <header id="navbar"
+    class="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
+      <a href="/frontend/home.html">
+        <h1 class="text-2xl md:text-3xl font-bold text-white hover:scale-110 transition-transform duration-300">
+          Bucaclinicos S.A.S
+        </h1>
+      </a>
+      <nav>
+        <ul class="flex space-x-4 md:space-x-6 text-sm md:text-base">
+          <li><a href="/frontend/home.html" class="nav-link">Inicio</a></li>
+          <li><a href="/frontend/productos.html" class="nav-link">Productos</a></li>
+          <li><a href="/frontend/nosotros.html" class="nav-link">Nosotros</a></li>
+          <li><a href="/frontend/funcionamiento.html" class="nav-link">Funcionamiento</a></li>
+        </ul>
+      </nav>
+      <div id="auth-section">
+        <a href="/login" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200 text-sm md:text-base">
+          Iniciar Sesión
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <!-- Solo se muestran los cambios relevantes dentro de la sección del timeline -->
+<main class="pt-28">
+    <section class="bg-white py-16 px-6 md:px-12 lg:px-24">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-4" data-aos="fade-down">
+          🛠️ ¿Cómo trabajamos en Bucaclinicos?
+        </h2>
+        <p class="text-lg text-center text-gray-600 mb-10 max-w-3xl mx-auto" data-aos="fade-up">
+          Te presentamos nuestro método de trabajo: claro, confiable y 100% humano. Aquí puedes explorar, armar tu
+          pedido preliminar y nuestro equipo se encargará del resto.
+        </p>
+  
+        <div class="relative border-l-4 border-blue-600 pl-12">
+          
+          <!-- Paso 1 -->
+          <div class="relative mt-10" data-aos="fade-right">
+            <div class="absolute -left-16 top-2 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl shadow-md">
+              📝
+            </div>
+            <h3 class="text-xl font-semibold text-blue-800 mb-1">1. Arma tu prepedido</h3>
+            <p class="text-gray-700">
+              Explora todos nuestros productos disponibles y agrégalos a tu carrito. Los precios son referenciales. No hay límite de cantidad, pero todo depende de nuestro stock real.
+            </p>
+          </div>
+  
+          <!-- Paso 2 -->
+          <div class="relative mt-10" data-aos="fade-left">
+            <div class="absolute -left-16 top-2 w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl shadow-md">
+              📦
+            </div>
+            <h3 class="text-xl font-semibold text-green-700 mb-1">2. Revisión de disponibilidad</h3>
+            <p class="text-gray-700">
+              Nuestro equipo revisará tu solicitud. Si hay faltantes, se ajustará el pedido a lo disponible o se ofrecerán opciones similares. No se cobra nada automáticamente.
+            </p>
+          </div>
+  
+          <!-- Paso 3 -->
+          <div class="relative mt-10" data-aos="fade-right">
+            <div class="absolute -left-16 top-2 w-12 h-12 bg-yellow-500 text-white rounded-full flex items-center justify-center text-2xl shadow-md">
+              📞
+            </div>
+            <h3 class="text-xl font-semibold text-yellow-700 mb-1">3. Confirmación personalizada</h3>
+            <p class="text-gray-700">
+              Uno de nuestros asesores se comunicará contigo para confirmar el pedido, resolver dudas, acordar formas de pago y coordinar la entrega. ¡Trato directo y sin bots!
+            </p>
+          </div>
+  
+          <!-- Paso 4 -->
+          <div class="relative mt-10" data-aos="fade-left">
+            <div class="absolute -left-16 top-2 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl shadow-md">
+              🤝
+            </div>
+            <h3 class="text-xl font-semibold text-purple-600 mb-1">4. Atención y soporte directo</h3>
+            <p class="text-gray-700">
+              ¿Tienes preguntas? ¿Cambiaste de idea? Estamos aquí para ayudarte. Toda la parte de pagos y entregas es gestionada por nuestros humanos, no por la página.
+            </p>
+          </div>
+  
+        </div>
+  
+        <!-- Botón -->
+        <div class="text-center mt-16" data-aos="zoom-in">
+          <a href="https://wa.me/573008181138?text=Hola%20Bucaclinicos%2C%20tengo%20dudas%20de%20su%20modo%20de%20operacion"
+            class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold px-6 py-3 rounded-full shadow-lg transition-all">
+            💬 ¿Tienes dudas? ¡Hablemos!
+          </a>
+        </div>
+  
+        <!-- Nota final -->
+        <div class="mt-6 text-center text-sm text-gray-500" data-aos="fade-up">
+          * Recuerda: esta plataforma es una guía para facilitar tu compra. No es un canal de venta directa ni realiza cobros.
+        </div>
+      </div>
+    </section>
+  </main>
+  
+
+  <script>
+    window.addEventListener("scroll", () => {
+      let navbar = document.getElementById("navbar");
+      navbar.classList.toggle("scrolled", window.scrollY > 50);
+    });
+    AOS.init();
+  </script>
+
+</body>
+
+</html>

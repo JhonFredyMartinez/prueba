@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Laboratorios - Bucaclinicos S.A.S</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    
+     <!-- Menú de navegación -->
+     <nav class="bg-white p-4 rounded shadow mb-6 flex flex-wrap justify-center gap-4">
+        <a href="/frontend/ADMINproductos.html" class="text-blue-700 font-semibold hover:text-blue-900">Productos</a>
+        <a href="/frontend/ADMINlaboratorios.html" class="text-blue-700 font-semibold hover:text-blue-900">Laboratorios</a>
+        <a href="/frontend/ADMINcategorias.html" class="text-blue-700 font-semibold hover:text-blue-900">Categorías</a>
+        <a href="/frontend/ADMINusuarios.html" class="text-blue-700 font-semibold hover:text-blue-900">Usuarios</a>
+        <a href="/frontend/ADMINpedidos.html" class="text-blue-700 font-semibold hover:text-blue-900">Pedidos</a>
+      </nav>
+
+    <!-- Encabezado -->
+    <h1 class="text-3xl font-bold text-blue-700 mb-6">Panel de Administración de Laboratorios</h1>
+
+    <!-- Formulario de producto -->
+    <div class="bg-white p-6 rounded shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Agregar/Editar Laboratorio</h2>
+      <form id="formulario-laboratorio" class="grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+
+        <input id="nombre" type="text" placeholder="Nombre de el laboratorio" class="border p-2 rounded" />
+        <input id="direccion" type="text" placeholder="Direccion" class="border p-2 rounded" />
+        
+        <input id="telefono" type="number" placeholder="Telefono" class="border p-2 rounded" />
+
+
+        <div class="md:col-span-2 flex justify-between gap-4">
+          <button id="actualizar" type="button" class="bg-yellow-400 text-white px-6 py-2 rounded hover:bg-yellow-500 w-full"> Actualizar Laboratorio </button>
+          <button id="crear" type="button" class="bg-green-300 text-white px-6 py-2 rounded hover:bg-green-400 w-full"> Crear Laboratorio </button>
+        </div>
+        
+      </form>
+    </div>
+
+    <!-- Tabla de productos con buscador -->
+    <div class="bg-white p-6 rounded shadow">
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+        <h2 class="text-xl font-semibold">Lista de Laboratorios</h2>
+
+        <!-- Buscador -->
+        <input type="text" placeholder="Buscar laboratorio..." class="border border-gray-300 p-2 rounded w-full md:w-80" />
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-2">id</th>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Direccion</th>
+              <th class="p-2">Telefono</th>
+              <th class="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="laboratorio-filter" class="divide-y">
+            <!-- Fila ejemplo -->
+            <!-- Repetir dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script type="module" src="./js/ADMINlaboratorios.js"></script>
+
+  <script>
+    function limpiarFormulario() {
+      const form = document.getElementById("formulario-laboratorio");
+      form.reset(); // Limpia todos los inputs y textareas
+      delete form.dataset.id; // Borra el ID guardado (para evitar confusión al crear)
+    }
+    //para crear una categoria
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("formulario-laboratorio");
+
+      document.getElementById("crear").addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¿Quieres crear este laboratorio?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, crear',
+          cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+          if (!result.isConfirmed) {
+            console.log("Actualización cancelada por el usuario");
+            return; // No hace nada si cancela
+          }
+
+          function getColombiaTimestamp() {
+            const now = new Date();
+
+            // Obtener la fecha y hora en la zona horaria de Colombia
+            const options = {
+              timeZone: 'America/Bogota',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false,
+            };
+
+            const formatter = new Intl.DateTimeFormat('sv-SE', options);
+            const parts = formatter.formatToParts(now);
+
+            // Extraer las partes y formatearlas
+            const dateParts = {};
+            parts.forEach(({ type, value }) => {
+              dateParts[type] = value;
+            });
+
+            // Unir en formato YYYY-MM-DD HH:mm:ss
+            const timestamp = `${dateParts.year}-${dateParts.month}-${dateParts.day} ${dateParts.hour}:${dateParts.minute}:${dateParts.second}`;
+
+            return timestamp;
+          }
+
+          // Ejemplo de uso
+          const timestamp = getColombiaTimestamp();
+
+          const nombre = document.getElementById("nombre").value.trim();
+          const direccion = document.getElementById("direccion").value.trim();
+          const telefono = document.getElementById("telefono").value.trim();
+
+
+          if (!nombre || !direccion || !telefono) {
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Error!',
+              text: 'Por favor completa todos los campos.',
+              confirmButtonText: 'OK',
+              allowOutsideClick: false
+            });
+            return;
+          }
+
+          const created_at = timestamp;
+
+          const data = {
+            nombre,
+            direccion,
+            telefono,
+            created_at
+          };
+
+          try {
+            const response = await fetch("http://localhost:5000/api/laboratorios", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+              const result = await response.json();
+              // Mostrar mensaje de éxito
+              Swal.fire({
+                icon: 'success',
+                title: '¡Laboratorio creado!',
+                text: 'El laboratorio se guardó correctamente',
+                confirmButtonText: 'OK', // botón visible
+                allowOutsideClick: false // para que no se cierre al hacer clic afuera
+              });
+              limpiarFormulario();
+            } else {
+              // Mostrar mensaje de error
+              Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'No se pudo guardar el laboratorio, error en el servidor.',
+                confirmButtonText: 'Entendido'
+              });
+
+            }
+          } catch (error) {
+            console.error("Error al registrarse:", error);
+            alert("Error del servidor. Intenta más tarde.");
+          }
+        });
+      });
+    });
+  </script>
+
+  <script>
+    function limpiarFormulario() {
+      const form = document.getElementById("formulario-laboratorio");
+      form.reset(); // Limpia todos los inputs y textareas
+      delete form.dataset.id; // Borra el ID guardado (para evitar confusión al crear)
+    }
+    //para actualizar los productos 
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("actualizar").addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¿Quieres actualizar este laboratorio?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, actualizar',
+          cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+          if (!result.isConfirmed) return;
+
+          // Obtener el timestamp en zona horaria de Colombia
+          const getColombiaTimestamp = () => {
+            const now = new Date();
+            const options = {
+              timeZone: 'America/Bogota',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false,
+            };
+            const formatter = new Intl.DateTimeFormat('sv-SE', options);
+            const parts = formatter.formatToParts(now);
+            const dateParts = {};
+            parts.forEach(({ type, value }) => dateParts[type] = value);
+            return `${dateParts.year}-${dateParts.month}-${dateParts.day} ${dateParts.hour}:${dateParts.minute}:${dateParts.second}`;
+          };
+
+          const timestamp = getColombiaTimestamp();
+
+          // Obtener campos del formulario
+          const form = document.getElementById("formulario-laboratorio");
+          const nombre = document.getElementById("nombre").value.trim();
+          const direccion = document.getElementById("direccion").value.trim();
+          const telefono = document.getElementById("telefono").value.trim();
+          const id = form.dataset.id;
+
+          // Validar campos obligatorios
+          if (!nombre || !direccion || !telefono) {
+            Swal.fire({
+              icon: 'warning',
+              title: '¡Error!',
+              text: 'Por favor completa todos los campos.',
+              confirmButtonText: 'OK',
+              allowOutsideClick: false
+            });
+            return;
+          }
+
+
+          const updated_at = timestamp;
+
+          const data = {
+            id,
+            nombre,
+            direccion,
+            telefono,
+            updated_at
+          };
+
+
+          try {
+            const response = await fetch("http://localhost:5000/api/laboratorios", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+
+
+            if (response.ok) {
+              Swal.fire({
+                icon: 'success',
+                title: '¡Laboratorio actualizado correctamente.',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              });
+              limpiarFormulario();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'No se pudo actualizar el laboratorio.',
+                confirmButtonText: 'Entendido'
+              });
+            }
+          } catch (error) {
+            console.error("Error al actualizar:", error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error de servidor',
+              text: 'Intenta más tarde.',
+              confirmButtonText: 'Cerrar'
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

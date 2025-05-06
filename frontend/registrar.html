@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Bucaclinicos S.A.S</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gradient-to-r from-blue-600 to-blue-800 flex items-center justify-center min-h-screen">
+
+    <div
+        class="relative w-full max-w-3xl p-8 bg-white rounded-2xl shadow-lg transform scale-95 hover:scale-100 transition-transform duration-500">
+        <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Registro</h2>
+
+        <div class="text-left mb-4">
+            <a href="/frontend/login.html" class="text-blue-600 hover:underline">← Volver al inicio de sesión</a>
+        </div>
+
+        <form id="registerForm" method="POST" class="grid grid-cols-2 gap-4">
+            <div>
+                <label for="nombre_drogueria" class="block text-sm font-medium text-gray-700">Nombre de la
+                    Droguería</label>
+                <input type="text" id="nombre_drogueria" name="nombre_drogueria"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="nombres" class="block text-sm font-medium text-gray-700">Nombres</label>
+                <input type="text" id="nombres" name="nombres"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="apellidos" class="block text-sm font-medium text-gray-700">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="tipo_documento" class="block text-sm font-medium text-gray-700">Tipo de documento</label>
+                <select id="tipo_documento" name="tipo_documento"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+                    <option value="CC">Cédula de ciudadanía</option>
+                    <option value="NIT">NIT</option>
+                    <option value="PAS">Pasaporte</option>
+                    <option value="CEX">Cédula de extranjería</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="numero_documento" class="block text-sm font-medium text-gray-700">Número de
+                    documento</label>
+                <input type="text" id="numero_documento" name="numero_documento"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input type="email" id="email" name="email"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                <input type="text" id="telefono" name="telefono"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="departamento" class="block text-sm font-medium text-gray-700">Departamento</label>
+                <input type="text" id="departamento" name="departamento"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="ciudad" class="block text-sm font-medium text-gray-700">Ciudad</label>
+                <input type="text" id="ciudad" name="ciudad"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+                <input type="text" id="direccion" name="direccion"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                <input type="password" id="password" name="password"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                    required minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                    title="Debe tener al menos 8 caracteres, incluir un número y un carácter especial (@$!%*?&)">
+            </div>
+
+            <div>
+                <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirmar
+                    Contraseña</label>
+                <input type="password" id="password_confirmation" name="password_confirmation"
+                    class="mt-1 w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all">
+            </div>
+
+            <div class="col-span-2 flex justify-between">
+                <button type="reset"
+                    class="w-1/2 bg-gray-400 text-white py-3 rounded-lg hover:bg-gray-500 transition-all shadow-md mr-2">Limpiar</button>
+                <button type="submit"
+                    class="w-1/2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all shadow-md">Registrarse</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("registerForm");
+        
+          form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+        
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("password_confirmation").value;
+        
+            if (password !== confirmPassword) {
+              return Swal.fire({
+                icon: 'error',
+                title: 'Contraseñas no coinciden',
+                text: 'Por favor asegúrate de que ambas contraseñas sean iguales.',
+              });
+            }
+        
+            const nombre_drogueria = document.getElementById("nombre_drogueria").value.trim();
+            const nombres = document.getElementById("nombres").value.trim();
+            const apellidos = document.getElementById("apellidos").value.trim();
+            const tipo_documento = document.getElementById("tipo_documento").value.trim();
+            const numero_documento = document.getElementById("numero_documento").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const departamento = document.getElementById("departamento").value.trim();
+            const ciudad = document.getElementById("ciudad").value.trim();
+            const direccion = document.getElementById("direccion").value.trim();
+        
+            if (!nombres || !apellidos || !tipo_documento || !numero_documento || !email || !telefono ||
+                !departamento || !ciudad || !direccion || !password) {
+              return Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor completa todos los campos antes de continuar.',
+              });
+            }
+        
+            try {
+              const response = await fetch("http://localhost:5000/api/usuarios", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  nombre_drogueria,
+                  nombres,
+                  apellidos,
+                  tipo_documento,
+                  numero_documento,
+                  email,
+                  telefono,
+                  departamento,
+                  ciudad,
+                  direccion,
+                  password
+                })
+              });
+        
+              const result = await response.json();
+        
+              if (response.ok) {
+                Swal.fire({
+                  icon: 'success',
+                  title: '¡Registro exitoso!',
+                  text: result.message,
+                }).then(() => {
+                  window.location.href = "/frontend/login.html";
+                });
+              } else {
+                // Mostrar el mensaje devuelto por el servidor (correo/documento repetido)
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Registro fallido!',
+                  text: result.message || "Ocurrió un error al registrar.",
+                });
+              }
+            } catch (error) {
+              console.error("Error al enviar datos:", error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error del servidor',
+                text: 'Intenta nuevamente más tarde.',
+              });
+            }
+          });
+        });
+        </script>
+        
+</body>
+
+
+</html>

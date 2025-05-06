@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucaclinicos S.A.S</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-mrEJF+UQvApHvU+zQ9ObgLMbCg4jTTXBFKLqlhzxk9dXHMY5YPW3FAeXD90J4PFDkH7EsZtTAv1Vk+8Eo7nXeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</head>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+</style>
+
+<body class="bg-gray-100 text-gray-900">
+    <header id="navbar"
+        class="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <a href="/frontend/home.html">
+                <h1 class="text-3xl font-bold text-white transition-transform duration-300 hover:scale-110">
+                    Bucaclinicos S.A.S
+                </h1>
+            </a>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/frontend/home.html" class="nav-link">Inicio</a></li>
+                    <li><a href="/frontend/productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="/frontend/nosotros.html" class="nav-link">Nosotros</a></li>
+                    <li><a href="/frontend/funcionamiento.html" class="nav-link">Funcionamiento</a></li>
+                </ul>
+            </nav>
+
+            <!-- Ícono/menú de usuario -->
+            <div class="relative" id="auth-section">
+                <!-- Cuando NO ha iniciado sesión -->
+                <a href="/frontend/login.html" id="login-btn"
+                    class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-100 font-semibold shadow-md transition duration-300 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.21 0 4.29.534 6.121 1.475M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Iniciar Sesión
+                </a>
+
+                <!-- Cuando ha iniciado sesión -->
+                <div id="user-menu" class="hidden relative">
+                    <button id="user-toggle"
+                        class="flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-900 transition duration-300 shadow-md">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5.121 17.804A13.937 13.937 0 0112 15c2.21 0 4.29.534 6.121 1.475M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span id="user-name">Usuario</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div id="dropdown-menu"
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden hidden z-50">
+                        <a href="/frontend/perfil.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Ver
+                            Perfil</a>
+                        <a href="/frontend/configuracion.html"
+                            class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Configuración</a>
+                        <button onclick="logoutUser()"
+                            class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        .nav-link {
+            position: relative;
+            font-weight: bold;
+            color: white;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        .scrolled {
+            padding: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <style>
+        .counter-box {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const loginBtn = document.getElementById("login-btn");
+          const userMenu = document.getElementById("user-menu");
+          const userName = document.getElementById("user-name");
+          const dropdown = document.getElementById("dropdown-menu");
+      
+          fetch("http:127.0.0.1:5000/api/me", {
+            method: "GET",
+            credentials: "include"
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                // Oculta botón "Iniciar Sesión" y muestra menú usuario
+                loginBtn.classList.add("hidden");
+                userMenu.classList.remove("hidden");
+      
+                console.log(userName);
+                
+                // Coloca nombre de usuario
+                userName.textContent = data.user.numero_documento;
+      
+                // Hacer desplegable
+                const toggle = document.getElementById("user-toggle");
+                toggle.addEventListener("click", () => {
+                  dropdown.classList.toggle("hidden");
+                });
+              }
+            });
+        });
+      
+        function logoutUser() {
+          fetch("http:127.0.0.1:5000/api/logout", {
+            method: "POST",
+            credentials: "include",
+          })
+            .then(() => {
+              window.location.href = "/frontend/login.html";
+            })
+            .catch((error) => {
+              console.error("Error cerrando sesión:", error);
+            });
+        }
+      </script>
+      
+
+    <main class="pt-20">
+        <section
+            class="relative bg-cover bg-center bg-no-repeat h-[400px] md:h-[500px] flex items-center justify-center text-white text-center"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/frontend/img/hi.jpg');"
+            data-aos="fade-in">
+            <div class="px-6 md:px-12">
+                <h1 class="text-3xl md:text-5xl font-bold" data-aos="fade-up">
+                    Tu salud es nuestra prioridad
+                </h1>
+                <p class="mt-4 text-lg md:text-xl" data-aos="fade-up" data-aos-delay="200">
+                    Distribución confiable de medicamentos y productos de salud
+                </p>
+                <a href="/frontend/productos.html"
+                    class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 shadow-lg"
+                    data-aos="fade-up" data-aos-delay="400">
+                    Ver productos
+                </a>
+            </div>
+        </section>
+
+        <!-- Nuestros Productos -->
+        <section id="productos" class="py-20 bg-gray-50" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold text-primary mb-6" data-aos="fade-up">Nuestros Productos</h2>
+                <p class="text-lg mb-10 text-gray-600" data-aos="fade-up" data-aos-delay="200">Distribuimos medicamentos
+                    de calidad, insumos médicos y más.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Producto 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition duration-300"
+                        data-aos="fade-up" data-aos-delay="300">
+                        <img src="https://via.placeholder.com/150" class="w-20 h-20 mx-auto mb-4" alt="Medicamentos">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Medicamentos</h3>
+                        <p class="text-gray-600 mb-4">Medicamentos genéricos y de marca para todo tipo de tratamientos.
+                        </p>
+                        <a href="#" class="text-primary font-semibold hover:underline">Ver más</a>
+                    </div>
+                    <!-- Producto 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition duration-300"
+                        data-aos="fade-up" data-aos-delay="400">
+                        <img src="https://via.placeholder.com/150" class="w-20 h-20 mx-auto mb-4" alt="Insumos Médicos">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Insumos Médicos</h3>
+                        <p class="text-gray-600 mb-4">Guantes, jeringas, algodón, alcohol y más productos clínicos.</p>
+                        <a href="#" class="text-primary font-semibold hover:underline">Ver más</a>
+                    </div>
+                    <!-- Producto 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition duration-300"
+                        data-aos="fade-up" data-aos-delay="500">
+                        <img src="https://via.placeholder.com/150" class="w-20 h-20 mx-auto mb-4" alt="Equipos Médicos">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Equipos Médicos</h3>
+                        <p class="text-gray-600 mb-4">Tensiómetros, oxímetros y otros equipos especializados.</p>
+                        <a href="#" class="text-primary font-semibold hover:underline">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cómo trabajamos -->
+        <section class="py-20 bg-white" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center text-primary mb-12" data-aos="fade-up">¿Cómo trabajamos?</h2>
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div data-aos="fade-up" data-aos-delay="300">
+                        <div
+                            class="w-20 h-20 bg-primary text-white mx-auto rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                            1</div>
+                        <h3 class="text-xl font-semibold mb-2">Solicita tu pedido</h3>
+                        <p class="text-gray-600">Elige los productos que necesitas y agrégalos al carrito.</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="400">
+                        <div
+                            class="w-20 h-20 bg-primary text-white mx-auto rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                            2</div>
+                        <h3 class="text-xl font-semibold mb-2">Confirmación</h3>
+                        <p class="text-gray-600">Revisamos tu pedido y te confirmamos disponibilidad y precios.</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="500">
+                        <div
+                            class="w-20 h-20 bg-primary text-white mx-auto rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                            3</div>
+                        <h3 class="text-xl font-semibold mb-2">Preparación</h3>
+                        <p class="text-gray-600">Empacamos cuidadosamente los productos seleccionados.</p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <div
+                            class="w-20 h-20 bg-primary text-white mx-auto rounded-full flex items-center justify-center text-2xl font-bold mb-4">
+                            4</div>
+                        <h3 class="text-xl font-semibold mb-2">Entrega</h3>
+                        <p class="text-gray-600">Recibe tu pedido en la puerta de tu casa o negocio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="nosotros" class="py-24 bg-gradient-to-br from-blue-100 via-white to-blue-50">
+            <div class="max-w-6xl mx-auto px-6 md:flex items-center gap-12">
+
+                <!-- Imagen con animación de aparición izquierda -->
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
+                    <img src="https://via.placeholder.com/500x300" alt="Sobre nosotros"
+                        class="rounded-xl shadow-xl hover:scale-105 transition-transform duration-500">
+                </div>
+
+                <!-- Texto con animación de aparición derecha -->
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <h2 class="text-4xl font-bold text-primary mb-6">Sobre Bucaclinicos S.A.S</h2>
+                    <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                        Somos una empresa especializada en la distribución de productos farmacéuticos, insumos médicos y
+                        hospitalarios con cobertura nacional.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Comprometidos con la salud y el bienestar, garantizamos calidad, cumplimiento y atención
+                        personalizada.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <script>
+            function showCart() {
+                // Implementa la visualización del carrito aquí
+                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                if (cartItems.length === 0) {
+                    alert('El carrito está vacío');
+                } else {
+                    let message = 'Productos en el carrito:\n';
+                    let total = 0;
+                    cartItems.forEach(item => {
+                        message += `${item.name} - $${item.price} x ${item.quantity}\n`;
+                        total += item.price * item.quantity;
+                    });
+                    message += `\nTotal: $${total}`;
+                    alert(message);
+                }
+            }
+        </script>
+    </main>
+
+    <!-- FOOTER MELITO + WHATSAPP + DISEÑO MODERNO -->
+    <footer class="bg-gray-100 text-gray-800 pt-16 pb-6 relative" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+            <!-- Marca -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-700 transition-transform duration-300 hover:scale-105">
+                    Bucaclinicos</h2>
+                <p class="text-sm text-gray-600 mb-0">
+                    Confianza, salud y calidad a tu alcance. Estamos para servirte siempre.
+                </p>
+                <img src="/frontend/img/logoinvo.png" alt="Logo Bucaclinicos"
+                    class="w-40 h-35 transition-transform duration-300 hover:scale-105">
+            </div>
+
+            <!-- Enlaces -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4 text-gray-800 transition-transform">Enlaces Rápidos</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="/frontend/home.html" class="hover:text-blue-600 transition">Inicio</a></li>
+                    <li><a href="/frontend/productos.html" class="hover:text-blue-600 transition">Productos</a></li>
+                    <li><a href="/frontend/nosotros.html" class="hover:text-blue-600 transition">Nosotros</a></li>
+                    <li><a href="/frontend/contacto.html" class="hover:text-blue-600 transition">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Servicios -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4 text-gray-800 transition-transform">Servicios</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="#" class="hover:text-blue-600 transition">Pedidos en línea</a></li>
+                    <li><a href="#" class="hover:text-blue-600 transition">Atención personalizada</a></li>
+                    <li><a href="#" class="hover:text-blue-600 transition">Soporte técnico</a></li>
+                    <li><a href="#" class="hover:text-blue-600 transition">Preguntas frecuentes</a></li>
+                </ul>
+            </div>
+
+            <!-- Contacto y Redes -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4 text-gray-800 transition-transform">Contáctanos</h3>
+                <p class="text-sm text-gray-600 mb-2">📍 Bucaramanga, Colombia</p>
+                <p class="text-sm text-gray-600 mb-2">📞 +57 300 818 1138</p>
+                <p class="text-sm text-gray-600 mb-4">✉️ info@bucaclinicos.com</p>
+
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com" target="_blank" class="hover:text-blue-600"><i
+                            class="fab fa-facebook fa-lg"></i></a>
+                    <a href="https://instagram.com" target="_blank" class="hover:text-pink-600"><i
+                            class="fab fa-instagram fa-lg"></i></a>
+                    <a href="https://wa.me/573008181138" target="_blank" class="hover:text-green-600"><i
+                            class="fab fa-whatsapp fa-lg"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="border-t border-gray-300 mt-10 pt-4 text-center text-sm text-gray-500">
+            &copy; 2025 Bucaclinicos S.A.S. Todos los derechos reservados.
+        </div>
+
+        <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+        <a href="https://wa.me/573008181138?text=Hola%20Bucaclinicos%2C%20quiero%20realizar%20un%20pedido%20🥵"
+            target="_blank"
+            class="fixed bottom-28 right-10 z-80 bg-green-500 text-white rounded-full p-6 shadow-lg hover:bg-green-600 transition duration-300 ease-in-out"
+            aria-label="WhatsApp">
+            <i class="fab fa-whatsapp fa-lg"></i>
+        </a>
+    </footer>
+
+    <!-- Scripts de animación -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+
+    <!-- Font Awesome para íconos -->
+    <script src="https://kit.fontawesome.com/a2d9d6b96b.js" crossorigin="anonymous"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+
+</body>
+
+</html>

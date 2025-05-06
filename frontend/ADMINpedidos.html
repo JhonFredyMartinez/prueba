@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Productos - Bucaclinicos S.A.S</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    
+     <!-- Menú de navegación -->
+     <nav class="bg-white p-4 rounded shadow mb-6 flex flex-wrap justify-center gap-4">
+        <a href="/frontend/ADMINproductos.html" class="text-blue-700 font-semibold hover:text-blue-900">Productos</a>
+        <a href="/frontend/ADMINlaboratorios.html" class="text-blue-700 font-semibold hover:text-blue-900">Laboratorios</a>
+        <a href="/frontend/ADMINcategorias.html" class="text-blue-700 font-semibold hover:text-blue-900">Categorías</a>
+        <a href="/frontend/ADMINusuarios.html" class="text-blue-700 font-semibold hover:text-blue-900">Usuarios</a>
+        <a href="/frontend/ADMINpedidos.html" class="text-blue-700 font-semibold hover:text-blue-900">Pedidos</a>
+      </nav>
+
+    <!-- Encabezado -->
+    <h1 class="text-3xl font-bold text-blue-700 mb-6">Panel de Administración de Productos</h1>
+
+    <!-- Formulario de producto -->
+    <div class="bg-white p-6 rounded shadow mb-10">
+      <h2 class="text-xl font-semibold mb-4">Agregar/Editar Producto</h2>
+      <form id="formulario-producto" class="grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+
+        <input id="codigo_i" type="text" placeholder="Código interno" class="border p-2 rounded" />
+        <input id="nombre" type="text" placeholder="Nombre del producto" class="border p-2 rounded" />
+        
+        <textarea id="descripcion" placeholder="Descripción" class="border p-2 rounded col-span-1 md:col-span-2"></textarea>
+        
+        <input id="precio" type="number" placeholder="Precio de venta" class="border p-2 rounded" />
+
+        <!-- Cambio: IVA como Sí o No -->
+        <select id="iva" class="border p-2 rounded">
+          <option value="">¿Tiene IVA?</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+
+        <select id="categoria-filter" class="border p-2 rounded">
+          <option value="">Categoría</option>
+        </select>
+
+        <select id="laboratorio-filter" class="border p-2 rounded">
+          <option value="">Laboratorio</option>
+        </select>
+
+        <select id="estado" class="border p-2 rounded">
+          <option value="disponible">Disponible</option>
+          <option value="se_consigue">Se consigue</option>
+          <option value="agotado">Agotado</option>
+        </select>
+
+        <!-- Cambio: input tipo file -->
+        <input type="file" class="border p-2 rounded bg-white" />
+
+        <div class="md:col-span-2 flex justify-between gap-4">
+          <button type="button" class="bg-yellow-400 text-white px-6 py-2 rounded hover:bg-yellow-500 w-full"> Actualizar Producto </button>
+          <button type="button" class="bg-green-300 text-white px-6 py-2 rounded hover:bg-green-400 w-full"> Crear Producto </button>
+        </div>
+        
+      </form>
+    </div>
+
+    <!-- Tabla de productos con buscador -->
+    <div class="bg-white p-6 rounded shadow">
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+        <h2 class="text-xl font-semibold">Lista de Productos</h2>
+
+        <!-- Buscador -->
+        <input type="text" placeholder="Buscar producto..." class="border border-gray-300 p-2 rounded w-full md:w-80" />
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="p-2">id</th>
+              <th class="p-2">Nombre</th>
+              <th class="p-2">Precio</th>
+              <th class="p-2">IVA</th>
+              <th class="p-2">Disponibilidad</th>
+              <th class="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productos-filter" class="divide-y">
+            <!-- Fila ejemplo -->
+            <!-- Repetir dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script type="module" src="./js/productosADMIN.js"></script>
+
+
+  <script type="module">
+
+    //para las categorias 
+    import { obtainCategories } from "./apiConnection/consumeApi.js";
+  
+    document.addEventListener("DOMContentLoaded", async () => {
+      const categoriaSelect = document.getElementById("categoria-filter");
+      const categorias = await obtainCategories();
+  
+      if (!categoriaSelect || !categorias) return;
+  
+      categorias.forEach(categoria => {
+        const option = document.createElement("option");
+        option.value = categoria.id;
+        option.textContent = categoria.nombre;
+        categoriaSelect.appendChild(option); // aquí da error si categoriaSelect es null
+      });
+    });
+
+
+    //para laboratorios
+    import { obtainLaboratories } from "./apiConnection/consumeApi.js";
+  
+    document.addEventListener("DOMContentLoaded", async () => {
+      const laboratorioSelect = document.getElementById("laboratorio-filter");
+      const laboratorios = await obtainLaboratories();
+  
+      if (!laboratorioSelect || !laboratorios) return;
+  
+      laboratorios.forEach(laboratorio => {
+        const option = document.createElement("option");
+        option.value = laboratorio.id;
+        option.textContent = laboratorio.nombre;
+        laboratorioSelect.appendChild(option); // aquí da error si categoriaSelect es null
+      });
+    });
+  </script>
+</body>
+</html>
